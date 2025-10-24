@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    container_name: optimus_gpt_dev
+    volumes:
+      - ./:/app:cached
+    env_file:
+      - .env
+    working_dir: /app
+    command: python main.py
+    restart: "no"
