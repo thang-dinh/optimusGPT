@@ -1,0 +1,7 @@
+#ignore environment variable files
+.env
+#ignore VSCode settings folder
+/.vscode
+#ignore Python cache files
+__pycache__/
+

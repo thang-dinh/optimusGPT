@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
-from langchain.schema.runnable import RunnableMap, RunnablePassthrough
+from langchain_core.runnables import RunnableMap, RunnablePassthrough
 from langchain_core.output_parsers import JsonOutputParser
 import json
 from pydantic import BaseModel, Field
@@ -17,6 +17,7 @@ def solver_chain():
         Include necessary imports and ensure the code is executable in a Python environment with gurobipy installed.
         Do not import any other libraries. Use comments to explain each step of the code.
         Do not include any additional text or explanations outside of the code.
+        The code will be run exactly as provided so ensure it is complete and correct.
         Problem Statement: {formatted_problem}""",
         input_variables=["formatted_problem"]
     )

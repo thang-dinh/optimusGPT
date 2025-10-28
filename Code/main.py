@@ -1,6 +1,9 @@
 import pandas as pd
 from agents.interpreter_agent import interpreter_chain
 from agents.solver_agent import solver_chain
+from agents.self_check_agent import self_check_chain
+from langchain_core.tools import Tool
+from langchain_experimental.utilities import PythonREPL
 import os
 import dotenv
 from pathlib import Path
@@ -29,15 +32,28 @@ def main():
 
     # 3. Generate guropipy code to find solution
     solution = solver_chain().invoke({"formatted_problem": user_prompt})
-    out_path = base / "output_code" / "generated_code.py"
-    # ensure output directory exists
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(out_path, 'w', encoding='utf-8') as file:
-        # solver_chain() result may expose content attribute
-        file.write(getattr(solution, 'content', str(solution)))
-
-    ## 4. Visualization
-    # visualize_tour(df, solution["order"])
+    # Convert AImessage to string
+    text_solution = getattr(solution, 'content', str(solution))
+    sanitized_solution = PythonREPL.sanitize_input(text_solution)
+    #output generated code to file in outputs/generated_code.py
+    output_path = base / "output_code"
+    with open(output_path / "generated_code.py", "w", encoding="utf-8") as code_file:
+        code_file.write(sanitized_solution)
+    #Confirm run with user input
+    go_ahead = input("Do you want to execute this code? (yes/no): ")
+    if go_ahead.lower() != 'yes':
+        print("Execution cancelled by user.")
+        return
+    repl = PythonREPL()
+    generated_code_output = repl.run(sanitized_solution, 10)
+    print("Solution:", generated_code_output)
+    # 4. Self-check the solution
+    self_check = self_check_chain().invoke({
+        "formatted_problem": user_prompt,
+        "solution": generated_code_output
+    })
+    print("Self-check summary:", getattr(self_check, 'content', str(self_check)))
+    
 
 
 if __name__ == "__main__":

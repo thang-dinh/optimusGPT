@@ -28,9 +28,7 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 ENV POETRY_NO_INTERACTION=1
 
 # Upgrade pip and let Poetry install dependencies from pyproject.toml
-RUN python -m pip install --upgrade pip setuptools wheel \
- && poetry --version \
- && poetry install --no-interaction --no-ansi --no-dev
+RUN poetry install --no-interaction --no-ansi --only main 
 
 # Default command to run the application
 CMD ["python", "main.py"]

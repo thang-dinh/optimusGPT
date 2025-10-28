@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
-from langchain.schema.runnable import RunnableMap, RunnablePassthrough
+from langchain_core.runnables import RunnableMap, RunnablePassthrough
 from langchain_core.output_parsers import JsonOutputParser
 import json
 from pydantic import BaseModel, Field
