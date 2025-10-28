@@ -7,6 +7,8 @@ from langchain_experimental.utilities import PythonREPL
 import os
 import dotenv
 from pathlib import Path
+import Code.agent_paths.iterative_solver as iterative_solver
+
 
 
 def main():
@@ -17,43 +19,20 @@ def main():
     dotenv_path = base / ".env"
     dotenv.load_dotenv(dotenv_path)
 
-    # 1. User input
+    # 1. User input - currently static file read
     file_path = base / "data" / "exmp_prbm.txt"
     with open(file_path, 'r', encoding='utf-8') as file:
         file_content = file.read()
     user_prompt = file_content
 
-    csv_path = base / "data" / "example_tsp.csv"
-    df = pd.read_csv(csv_path)
+    generated_code_output, self_check_summary = iterative_solver.path_initial(user_prompt)
 
-    # 2. LLM interprets problem
-    structured_problem = interpreter_chain().invoke({"problem_statement": user_prompt})
-    print("Structured problem:", structured_problem)
-
-    # 3. Generate guropipy code to find solution
-    solution = solver_chain().invoke({"formatted_problem": user_prompt})
-    # Convert AImessage to string
-    text_solution = getattr(solution, 'content', str(solution))
-    sanitized_solution = PythonREPL.sanitize_input(text_solution)
-    #output generated code to file in outputs/generated_code.py
-    output_path = base / "output_code"
-    with open(output_path / "generated_code.py", "w", encoding="utf-8") as code_file:
-        code_file.write(sanitized_solution)
-    #Confirm run with user input
-    go_ahead = input("Do you want to execute this code? (yes/no): ")
-    if go_ahead.lower() != 'yes':
-        print("Execution cancelled by user.")
-        return
-    repl = PythonREPL()
-    generated_code_output = repl.run(sanitized_solution, 10)
-    print("Solution:", generated_code_output)
-    # 4. Self-check the solution
-    self_check = self_check_chain().invoke({
-        "formatted_problem": user_prompt,
-        "solution": generated_code_output
-    })
-    print("Self-check summary:", getattr(self_check, 'content', str(self_check)))
+    another = input("Do you want to run another iteration? (yes/no): ")
+    if another.lower() == 'yes':
+        additional_context = input("Please provide missing context or feedback for the next iteration:\n")
+        generated_code_output, self_check_summary = iterative_solver.path_subsequent(user_prompt, generated_code_output, additional_context)
     
+
 
 
 if __name__ == "__main__":
