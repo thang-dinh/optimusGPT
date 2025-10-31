@@ -44,6 +44,8 @@ flowchart TD
 
 ## Iterative Flow (Subsequent Iterations)
 
+**Note:** In cases 1 & 2, the code is generated but not executed. Self-Check validates the code string, not execution results. Only case 3's recursive call eventually leads to execution.
+
 ```mermaid
 flowchart TD
     A([User Feedback<br/>Additional Context]) --> B[Iterative Decision Agent<br/>gpt-4o-mini<br/><br/>Analyze:<br/>- Problem statement<br/>- Previous solution<br/>- Self-analysis<br/>- User feedback]
@@ -51,17 +53,15 @@ flowchart TD
     
     C -->|1: Reinterpret| D[Interpreter Agent<br/>with feedback]
     D --> E[Solver Agent<br/>with reinterpretation]
-    E --> F[Code Execution]
+    E --> K[Self-Check Agent<br/>validates code string]
     
     C -->|2: Solve Again| G[Solver Agent<br/>with updated context]
-    G --> F
+    G --> K
     
     C -->|3: Request Info| H[Request More<br/>Information]
     H --> I[User Provides<br/>Additional Info]
     I --> J[Recursive Call<br/>path_subsequent<br/>with new context]
     J --> B
-    
-    F --> K[Self-Check Agent]
     K --> L{User Decision<br/>Another iteration?}
     L -->|No| M([Exit])
     L -->|Yes<br/>More Feedback| A

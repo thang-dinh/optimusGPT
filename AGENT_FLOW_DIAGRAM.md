@@ -140,14 +140,14 @@
                         │                             │ RECURSIVE CALL     │
                         v                             │ path_subsequent    │
               ┌──────────────────┐                    │ (with new context) │
-              │ CODE EXECUTION   │                    └─────────┬──────────┘
-              │ (PythonREPL)     │                              │
+              │ SELF-CHECK AGENT │                    └─────────┬──────────┘
+              │ (validates code  │                              │
+              │  string only)    │                              │
               └────────┬─────────┘                              │
                        │                                        │
-                       v                                        │
-              ┌──────────────────┐                              │
-              │ SELF-CHECK AGENT │                              │
-              └────────┬─────────┘                              │
+                       │                                        │
+                       │ NOTE: Cases 1 & 2 skip execution      │
+                       │ Code is generated but not run          │
                        │                                        │
                        v                                        │
               ┌──────────────────┐                              │
@@ -276,6 +276,12 @@ Input: User Prompt (Optimization Problem)
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+## Important Notes
+
+### Execution Behavior Differences
+- **Initial Flow (`path_initial`)**: Code is executed via PythonREPL, and the execution output is validated
+- **Iterative Flow (`path_subsequent`)**: For decision cases 1 & 2, code is generated but NOT executed. The Self-Check Agent validates the generated code string itself, not execution results. Only case 3 (recursive call) eventually executes code when it loops back.
 
 ## Agents Summary
 
