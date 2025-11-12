@@ -12,7 +12,7 @@ money_market = model.addVar(name="MoneyMarket", lb=0)  # Investment in money mar
 foreign_bonds = model.addVar(name="ForeignBonds", lb=0)  # Investment in foreign bonds
 
 # Set the objective function to maximize the total return
-# Money market return is 2% and foreign bonds return is 10%
+# Return from money market fund is 2% and from foreign bonds is 10%
 model.setObjective(0.02 * money_market + 0.10 * foreign_bonds, GRB.MAXIMIZE)
 
 # Add constraints

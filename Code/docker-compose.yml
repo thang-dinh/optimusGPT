@@ -1,12 +1,37 @@
-version: "3.8"
 services:
   app:
-    build: .
-    container_name: optimus_gpt_dev
-    volumes:
-      - ./:/app:cached
-    env_file:
-      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: optimus_gpt_app
     working_dir: /app
     command: python main.py
     restart: "no"
+    env_file:
+      - .env
+    tty: true          # allow input() prompts
+    stdin_open: true   # keep stdin open for prompts
+    volumes:
+      - ./:/app:cached
+      - ./output_code:/app/output_code
+
+  executor:
+    build:
+      context: .
+      dockerfile: executor.Dockerfile
+    profiles: ["executor"]
+    read_only: true
+    user: "10001:10001"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 512m
+    cpus: "1.0"
+    working_dir: /sandbox
+    volumes:
+      - ./output_code:/sandbox/code:ro
+
+networks:
+  default:
+    name: optimus_default

@@ -7,9 +7,8 @@ from langchain_experimental.utilities import PythonREPL
 import os
 import dotenv
 from pathlib import Path
-import Code.agent_paths.iterative_solver as iterative_solver
 
-
+import agent_paths.iterative_solver as iterative_solver
 
 def main():
     # Base directory where this file lives (Code/)
@@ -30,10 +29,12 @@ def main():
     another = input("Do you want to run another iteration? (yes/no): ")
     if another.lower() == 'yes':
         additional_context = input("Please provide missing context or feedback for the next iteration:\n")
-        generated_code_output, self_check_summary = iterative_solver.path_subsequent(user_prompt, generated_code_output, additional_context)
-    
-
-
+        generated_code_output, self_check_summary = iterative_solver.path_subsequent(
+            user_prompt,
+            generated_code_output,
+            self_check_summary,
+            additional_context
+        )
 
 if __name__ == "__main__":
     main()
