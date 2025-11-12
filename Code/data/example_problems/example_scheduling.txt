@@ -1,0 +1,82 @@
+Context
+
+You are responsible for creating a 2-week (14-day) work schedule for 15 nurses at MetroCare Hospital’s Medical and Surgical unit.
+The hospital operates three daily shifts, each 8 hours long:
+
+Morning: 7 AM – 3 PM
+
+Evening: 3 PM – 11 PM
+
+Night: 11 PM – 7 AM
+
+Each shift must be fully staffed every day.
+| Name   | Role | Skills / Certifications | Experience (yrs) | Availability           | Notes                                       |
+| ------ | ---- | ----------------------- | ---------------- | ---------------------- | ------------------------------------------- |
+| Alice  | RN   | ICU                     | 6                | All days               | Eligible for Charge Nurse                   |
+| Ben    | RN   | General                 | 4                | No Fridays             |                                             |
+| Cara   | RN   | ICU                     | 7                | No weekends            | Eligible for Charge Nurse                   |
+| Dana   | RN   | General                 | 2                | M–F only               |                                             |
+| Ethan  | RN   | General                 | 8                | All days               | Eligible for Charge Nurse                   |
+| Fiona  | RN   | ICU                     | 10               | All days               | Prefers nights, eligible for Charge Nurse   |
+| Grace  | LPN  | –                       | 4                | No Wednesdays          |                                             |
+| Hannah | LPN  | –                       | 6                | All days               |                                             |
+| Ian    | LPN  | –                       | 2                | M–Th only              |                                             |
+| Jordan | NA   | –                       | 5                | All days               |                                             |
+| Kelly  | NA   | –                       | 1                | Not available weekends |                                             |
+| Liam   | NA   | –                       | 3                | All days               |                                             |
+| Mia    | NA   | –                       | 2                | All days               | Minor: cannot work past 9 PM                |
+| Noah   | RN   | General                 | 3                | All days               |                                             |
+| Olivia | RN   | ICU                     | 12               | All days               | Prefers mornings, eligible for Charge Nurse |
+
+
+1. Shift coverage:
+
+Each shift must have:
+
+1 Charge Nurse (experienced RN)
+
+2 other RNs (at least 1 ICU-certified total)
+
+2 LPNs
+
+2 NAs
+
+2. Work hour limits:
+
+Maximum 40 hours/week per employee.
+
+No consecutive night → morning shifts.
+
+Minimum 12 hours rest between shifts.
+
+No employee may work more than 6 consecutive days.
+
+3. Fairness:
+
+Distribute weekend shifts evenly among all non-restricted staff.
+
+Avoid assigning all night shifts to the same few people (unless preferred).
+
+Ensure that at least 3 nurses get 2 consecutive days off per week.
+
+4. Preferences & Restrictions:
+
+Fiona prefers night shifts.
+
+Olivia prefers morning shifts.
+
+Cara and Dana cannot work weekends.
+
+Mia cannot work past 9 PM (so no evening/night).
+
+Ben cannot work Fridays.
+
+Ian cannot work Fri–Sun.
+
+5. Skills and Experience:
+
+Charge Nurse must be one of: Alice, Cara, Ethan, Fiona, Olivia.
+
+At least one ICU RN (Alice, Cara, Fiona, Olivia) per shift.
+
+At least one LPN with >3 years experience per shift (Grace or Hannah).

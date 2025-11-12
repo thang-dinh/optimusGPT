@@ -7,8 +7,7 @@ from langchain_experimental.utilities import PythonREPL
 import os
 import dotenv
 from pathlib import Path
-import Code.agent_paths.iterative_solver as iterative_solver
-
+import workflows.optimus as optimus
 
 
 def main():
@@ -20,18 +19,11 @@ def main():
     dotenv.load_dotenv(dotenv_path)
 
     # 1. User input - currently static file read
-    file_path = base / "data" / "exmp_prbm.txt"
+    file_path = base / "data" / "example_scheduling.txt"
     with open(file_path, 'r', encoding='utf-8') as file:
         file_content = file.read()
     user_prompt = file_content
-
-    generated_code_output, self_check_summary = iterative_solver.path_initial(user_prompt)
-
-    another = input("Do you want to run another iteration? (yes/no): ")
-    if another.lower() == 'yes':
-        additional_context = input("Please provide missing context or feedback for the next iteration:\n")
-        generated_code_output, self_check_summary = iterative_solver.path_subsequent(user_prompt, generated_code_output, additional_context)
-    
+    generated_code_output = optimus.flow(user_prompt)
 
 
 
