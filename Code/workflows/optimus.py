@@ -1,7 +1,9 @@
 import pandas as pd
 from agents.interpreter_agent import interpreter_chain
 from agents.solver_agent import solver_chain
-from Code.agents.verify_agent import verification_chain
+from agents.verify_agent import verification_chain
+from agents.result_summary_agent import result_summary_chain
+from agents.failure_analysis_agent import failure_analysis_chain
 from langchain_core.tools import Tool
 from langchain_experimental.utilities import PythonREPL
 import os
@@ -9,7 +11,7 @@ import dotenv
 from pathlib import Path
 import json
 
-def flow(user_prompt: str) -> str:
+def flow(user_prompt: str) -> tuple[dict, str]:
     # Base directory where this file lives (Code/)
     base = Path(__file__).resolve().parent.parent
 
@@ -56,4 +58,22 @@ def flow(user_prompt: str) -> str:
 
     #Next steps to implement: if code succesful, summarize results for the user, and return all steps.
     # If code failed, failure analysis, determine where the problem was, either ask for more information, or create notes regarding specific problem, and try again
-    
+
+    if(self_check["output_succesful"]):
+        summary = result_summary_chain.invoke()# NEeds parameters
+        return getattr(summary, 'content', str(summary))
+    else:
+        evaluation = failure_analysis_chain.invoke({
+            "user_prompt": user_prompt,
+            "structured_problem": str_structured_problem,
+            "code": sanitized_code,
+            "code_output": generated_code_output,
+            "notes": working_memory["existing_notes"]
+        })
+        #write notes to file for future use
+        if("notes_for_future" in evaluation):
+            notes_filename = structured_problem['problem_catagory']
+            with open(base / "data" / "notes_by_catagory" / notes_filename, "a", encoding="utf-8") as notes_file:
+                notes_file.write("\n")
+                notes_file.write(evaluation["notes_for_future"])
+        return (working_memory, getattr(evaluation, 'content', str(evaluation)))

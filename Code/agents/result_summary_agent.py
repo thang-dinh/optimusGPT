@@ -5,7 +5,7 @@ from langchain_core.output_parsers import JsonOutputParser
 import json
 from pydantic import BaseModel, Field
 
-def verification_chain():
+def result_summary_chain():
     # Create the LLM instance
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
