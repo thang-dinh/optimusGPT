@@ -26,7 +26,7 @@ def interpreter_chain():
     prompt = PromptTemplate(
         template="""You are an expert optimization assistant. Given a user optimization problem extract: 
         1. Whether the problem fits into an already seen catagory of optimization problems.
-        2. If the problem fits into a known catagory, specify which catagory. Otherwise state the name of the new catagory.
+        2. If the problem fits into a known catagory, specify which catagory. Otherwise state the name of the new catagory. The catagory should be as broad as possible, ex. Scheduling, Traveling Salesman Problem, Investing.
         3. The objective (E.g. minimize cost, maximize profit, create schedule, etc.)
         4. The variables involved
         5. The key constraints

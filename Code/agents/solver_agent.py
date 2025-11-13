@@ -18,9 +18,9 @@ def solver_chain():
         Do not import any other libraries. Use comments to explain each step of the code.
         Do not include any additional text or explanations outside of the code.
         The code will be run exactly as provided so ensure it is complete and correct.
-        Problem Statement: {formatted_problem}
+        Problem Statement: {structured_problem}
         Additional notes from previous attempts on similar problems: {notes}""",
-        input_variables=["formatted_problem", "notes"]
+        input_variables=["structured_problem", "notes"]
     )
 
     # Chain of runnables.

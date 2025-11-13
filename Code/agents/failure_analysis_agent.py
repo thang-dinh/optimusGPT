@@ -32,17 +32,17 @@ def failure_analysis_chain():
         
         {format_instructions}
         
-        Problem Statement: {formatted_problem}
+        User Prompt: {user_prompt}
         Problem Interpretation and Context: {structured_problem}
         Code: {code}
-        Code Output: {solution}
+        Code Output: {code_output}
         Notes created regarding the solution of similar problems in the past: {notes}""",
-        input_variables=["formatted_problem", "structured_problem", "code", "solution", "notes"],
+        input_variables=["user_prompt", "structured_problem", "code", "code_output", "notes"],
         partial_variables={"format_instructions": parser.get_format_instructions()}
     )
 
     # Chain of runnables.
-    chain = prompt | llm 
+    chain = prompt | llm | parser
     # Return chain. Can be invoked with .invoke()
     return chain
 
