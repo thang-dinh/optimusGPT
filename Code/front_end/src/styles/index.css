@@ -1,0 +1,48 @@
+
+@import "tailwindcss";
+
+@theme {
+  /* Light grey (Top header menu) */
+  --color-header: #E3E3E3;
+  
+  /* Lightest lavender (background highlights, subtle accents) */
+  --color-brand-50: #FAE1FA;   
+
+  /* Very light lavender (chat bubble area, containers) */
+  --color-brand-100: #EDE1FF;
+
+  /* Light lavender (chat bubbles) */
+  --color-brand-200: #D5C6FF;   
+
+  /* Medium lavender (page background) */
+  --color-brand-300: #BFA0FD;     /* main background */
+
+  /* Slightly deeper purple */
+  --color-brand-400: #A37AFF;
+
+  /* Mid-strong purple (general accents) */
+  --color-brand-500: #9051FF;     /* sidebar purple */
+
+  /* Darker accent purple */
+  --color-brand-600: #7C38DD;
+
+  /* Button border purple */
+  --color-brand-700: #751987;   
+
+  /* Deep accent */
+  --color-brand-800: #561068;
+
+  /* Deepest purple */
+  --color-brand-900: #360B43;
+}
+
+html, body {
+  background-color: #BFA0FD !important;  /* main background light purple*/
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  background-color: #BFA0FD !important;
+  min-height: 100vh;
+}
